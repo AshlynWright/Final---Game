@@ -6,8 +6,15 @@ namespace Final___Game
 {
     public class Game1 : Game
     {
+       
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        private SpriteFont font;
+        SpriteFont titleFont;
+
+
 
         public Game1()
         {
@@ -26,7 +33,8 @@ namespace Final___Game
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            font = Content.Load<SpriteFont>("pick your pet");
+            
             // TODO: use this.Content to load your game content here
         }
 
@@ -42,10 +50,12 @@ namespace Final___Game
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.White);
+           _spriteBatch.Begin();
 
-            // TODO: Add your drawing code here
-
+            _spriteBatch.DrawString(font, "pick your pet", new Vector2(100, 100), Color.Black);
+            
+            _spriteBatch.End();
             base.Draw(gameTime);
         }
     }
