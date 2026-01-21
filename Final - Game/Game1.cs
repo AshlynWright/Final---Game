@@ -106,7 +106,7 @@ namespace Final___Game
             txWhitePixel.SetData(new[] { Color.White });
 
             // Simple button texture (make a gray rectangle image)
-            txButton = Content.Load<Texture2D>("button");
+            //txButton = Content.Load<Texture2D>("button");
         }
 
         protected override void Update(GameTime gameTime)
