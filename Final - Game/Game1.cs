@@ -156,18 +156,16 @@ namespace Final___Game
 
             // MainGame center animal
             rctAnimalCenter = new Rectangle(200, 180, 200, 200);
-
+            
             // Left buttons (64x64)
-            for (int i = 0; i < 3; i++)
-            {
-                leftButtons[i] = new Rectangle(30, 120 + i * 90, 64, 64);
-            }
+            leftButtons[0] = new Rectangle(30, 120, 64, 64);
+            leftButtons[1] = new Rectangle(30, 210, 64, 64);
+            leftButtons[2] = new Rectangle(30, 300, 64, 64);
 
             // Right buttons (64x64)
-            for (int i = 0; i < 3; i++)
-            {
-                rightButtons[i] = new Rectangle(506, 120 + i * 90, 64, 64);
-            }
+            rightButtons[0] = new Rectangle(506, 120, 64, 64);
+            rightButtons[1] = new Rectangle(506, 210, 64, 64);
+            rightButtons[2] = new Rectangle(506, 300, 64, 64);
 
             base.Initialize();
         }
