@@ -54,8 +54,15 @@ namespace Final___Game
         private Texture2D txHungerIcon;
         private Texture2D txLoveIcon;
 
-        private Rectangle[] leftButtons = new Rectangle[3];
-        private Rectangle[] rightButtons = new Rectangle[3];
+        // Left side actions
+        private Rectangle feedButton;
+        private Rectangle cleanButton;
+        private Rectangle playButton;
+
+        // Right side actions
+        private Rectangle walkButton;
+        private Rectangle petButton;
+        private Rectangle brushButton;
 
         private SpriteFont uiFont;
 
@@ -156,16 +163,16 @@ namespace Final___Game
 
             // MainGame center animal
             rctAnimalCenter = new Rectangle(200, 180, 200, 200);
-            
+
             // Left buttons (64x64)
-            leftButtons[0] = new Rectangle(30, 120, 64, 64);
-            leftButtons[1] = new Rectangle(30, 210, 64, 64);
-            leftButtons[2] = new Rectangle(30, 300, 64, 64);
+            feedButton = new Rectangle(30, 120, 64, 64);
+            cleanButton = new Rectangle(30, 210, 64, 64);
+            playButton = new Rectangle(30, 300, 64, 64);
 
             // Right buttons (64x64)
-            rightButtons[0] = new Rectangle(506, 120, 64, 64);
-            rightButtons[1] = new Rectangle(506, 210, 64, 64);
-            rightButtons[2] = new Rectangle(506, 300, 64, 64);
+            walkButton = new Rectangle(506, 120, 64, 64);
+            petButton = new Rectangle(506, 210, 64, 64);
+            brushButton = new Rectangle(506, 300, 64, 64);
 
             base.Initialize();
         }
@@ -303,23 +310,31 @@ namespace Final___Game
                 else if (currentScreen == ScreenState.MainGame)
                 {
                     // Left buttons
-                    for (int i = 0; i < 3; i++)
+                    if (feedButton.Contains(pos))
                     {
-                        if (leftButtons[i].Contains(pos))
-                        {
-                            OnLeftButtonPressed(i);
-                            break;   // stop double-trigger in same frame
-                        }
+                        OnLeftButtonPressed("Feed");
+                    }
+                    else if (cleanButton.Contains(pos))
+                    {
+                        OnLeftButtonPressed("Clean");
+                    }
+                    else if (playButton.Contains(pos))
+                    {
+                        OnLeftButtonPressed("Play");
                     }
 
                     // Right buttons
-                    for (int i = 0; i < 3; i++)
+                    if (walkButton.Contains(pos))
                     {
-                        if (rightButtons[i].Contains(pos))
-                        {
-                            OnRightButtonPressed(i);
-                            break;
-                        }
+                        OnRightButtonPressed("Walk");
+                    }
+                    else if (petButton.Contains(pos))
+                    {
+                        OnRightButtonPressed("Pet");
+                    }
+                    else if (brushButton.Contains(pos))
+                    {
+                        OnRightButtonPressed("Brush");
                     }
                 }
             }
@@ -442,11 +457,11 @@ namespace Final___Game
             _spriteBatch.DrawString(uiFont, text, textPos, Color.Black);
         }
 
-        private void OnLeftButtonPressed(int index)
+        private void OnLeftButtonPressed(string button)
         {
-            switch (index)
+            switch (button)
             {
-                case 0: // Feed
+                case "Feed":
                     playStreak = 0;
                     hunger = Math.Max(0, hunger + 15);
                     energy = Math.Min(100, energy + 10);
@@ -459,7 +474,7 @@ namespace Final___Game
                     }
 
                     break;
-                case 1: // Clean
+                case "Clean":
 
                     feedStreak = 0;
                     playStreak = 0;
@@ -468,7 +483,7 @@ namespace Final___Game
                     SwitchToNormalTexture();
                     break;
 
-                case 2: // Play
+                case "Play":
 
                     feedStreak = 0;
                     energy = Math.Min(100, energy - 20);
@@ -484,26 +499,26 @@ namespace Final___Game
             }
         }
 
-        private void OnRightButtonPressed(int index)
+        private void OnRightButtonPressed(string button)
         {
 
             feedStreak = 0;
             playStreak = 0;
 
-            switch (index)
+            switch (button)
             {
-                case 0: // Walk
+                case "Walk":
                     health = Math.Min(100, health + 5);
                     energy = Math.Min(100, energy - 15);
                     hunger = Math.Min(100, hunger - 10);
                     break;
 
-                case 1: // Pet
+                case "Pet":
                     energy = Math.Min(100, energy + 5);
                     love = Math.Min(100, love + 10);
                     break;
 
-                case 2: // Brush
+                case "Brush":
                     love = Math.Min(100, love + 5);
                     break;
             }
@@ -648,15 +663,13 @@ namespace Final___Game
                 // Draw center animal
                 _spriteBatch.Draw(txSelectedAnimal, rctAnimalCenter, Color.White);
 
-                // Left buttons
-                _spriteBatch.Draw(txFeed, leftButtons[0], Color.White);
-                _spriteBatch.Draw(txClean, leftButtons[1], Color.White);
-                _spriteBatch.Draw(txPlay, leftButtons[2], Color.White);
+                _spriteBatch.Draw(txFeed, feedButton, Color.White);
+                _spriteBatch.Draw(txClean, cleanButton, Color.White);
+                _spriteBatch.Draw(txPlay, playButton, Color.White);
 
-                // Right buttons
-                _spriteBatch.Draw(txWalk, rightButtons[0], Color.White);
-                _spriteBatch.Draw(txPet, rightButtons[1], Color.White);
-                _spriteBatch.Draw(txBrush, rightButtons[2], Color.White);
+                _spriteBatch.Draw(txWalk, walkButton, Color.White);
+                _spriteBatch.Draw(txPet, petButton, Color.White);
+                _spriteBatch.Draw(txBrush, brushButton, Color.White);
 
                 // Draw pet name above the animal (big + white)
                 if (!string.IsNullOrEmpty(petName))
